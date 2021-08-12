@@ -25,7 +25,7 @@ public class CloudJump {
 		
 //		List<Integer> c = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "));
 		
-		int result = Result.jumpingOnClouds(c);
+		int result = Jumper.jumpingOnClouds(c);
 //		bufferedWriter.write(String.valueOf(result));
 //		bufferedWriter.newLine();
 		
@@ -35,7 +35,7 @@ public class CloudJump {
 
 }
 
-class Result {
+class Jumper {
 	public static int jumpingOnClouds(List<Integer> c) {
 		int dodge = 0;
 		for (int i = 0; i < c.size(); i++, dodge++) {
