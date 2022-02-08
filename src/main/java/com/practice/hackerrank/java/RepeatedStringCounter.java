@@ -1,10 +1,10 @@
 package com.practice.hackerrank.java;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.io.InputStreamReader;
 
 public class RepeatedStringCounter {
 	public static void main(String[] args) throws IOException {
@@ -17,9 +17,8 @@ public class RepeatedStringCounter {
 
 		String s = "a";
 		long n = 1000000000000l;
-//		int intN = (int) n;
-		
-		long result = SubStringCounter.repeatedString(s, n);
+
+		long result = SubStringCounter.repeatedCharA(s, n);
 
 //	        bufferedWriter.write(String.valueOf(result));
 //	        bufferedWriter.newLine();
@@ -31,34 +30,46 @@ public class RepeatedStringCounter {
 }
 
 class SubStringCounter {
-	public static long repeatedString(String s, long n) {
+//For a string consisting of infinite repetitions of String s, counts the number of instances of the first character of the string
+	public static long repeatedCharAt0(String s, long n) {
+
 		long subStrReps = 0;
-		char charToCount = s.charAt(0);
-		System.out.println(charToCount);
-		long cycles = n / (long)s.length();
-		long partialCycles = n % (long)s.length();
-		System.out.println("number of cycles " + cycles);
-		for(char c: s.toCharArray()) {
-//				System.out.println("In for each loop");
-			if(c == charToCount) {
-//					System.out.println("In if statement");
+		char charToCount = s.toLowerCase().charAt(0);
+		long cycles = n / (long) s.length();
+		long partialCycles = n % (long) s.length();
+		for (char c : s.toLowerCase().toCharArray()) {
+			if (c == charToCount) {
 				subStrReps++;
 			}
 		}
-		subStrReps = subStrReps*cycles;
-		
-		for(char c: s.substring(0, (int)partialCycles).toCharArray()) {
-//			System.out.println("In for each loop");
-		if(c == charToCount) {
-//				System.out.println("In if statement");
-			subStrReps++;
+		subStrReps = subStrReps * cycles;
+
+		for (char c : s.toLowerCase().substring(0, (int) partialCycles).toCharArray()) {
+			if (c == charToCount) {
+				subStrReps++;
+			}
 		}
-	}
-//		for(long i=0; i<cycles; i++) {
-//			System.out.println("In for loop");
-//			
-//		}
-		System.out.println(subStrReps);
 		return subStrReps;
+	}
+
+	public static long repeatedCharA(String s, long n) {
+		long subStrReps = 0;
+		
+		long cycles = n / (long) s.length();
+		long partialCycles = n % (long) s.length();
+		for (char c : s.toLowerCase().toCharArray()) {
+			if (c == 'a') {
+				subStrReps++;
+			}
+		}
+		subStrReps = subStrReps * cycles;
+
+		for (char c : s.toLowerCase().substring(0, (int) partialCycles).toCharArray()) {
+			if (c == 'a') {
+				subStrReps++;
+			}
+		}
+		return subStrReps;
+
 	}
 }
