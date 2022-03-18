@@ -1,74 +1,77 @@
 package com.practice.hackerrank.java;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.map.HashedMap;
-
+/*
+ * 
+ */
 public class HashTablesRansomNote {
 	public static void main(String[] args) throws IOException {
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-		String[] firstMultipleInput = bufferedReader.readLine().replaceAll("\\s+$", "").split(" ");
+        String[] firstMultipleInput = bufferedReader.readLine().replaceAll("\\s+$", "").split(" ");
 
-		int m = Integer.parseInt(firstMultipleInput[0]);
+        int m = Integer.parseInt(firstMultipleInput[0]);
 
-		int n = Integer.parseInt(firstMultipleInput[1]);
+        int n = Integer.parseInt(firstMultipleInput[1]);
 
-		List<String> magazine = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
-				.collect(toList());
+        List<String> magazine = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .collect(toList());
 
-		List<String> note = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" ")).collect(toList());
+        List<String> note = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .collect(toList());
 
-		WordMatcher.checkMagazine(magazine, note);
+        WordMatcher.checkMagazine(magazine, note);
 
-		bufferedReader.close();
-	}
+        bufferedReader.close();
+    }
 }
 
 class WordMatcher {
 	public static void checkMagazine(List<String> magazine, List<String> note) {
-		// Write your code here
-		boolean willWork = true;
-		IterableMap<String, Integer> noteWords = new HashedMap<String, Integer>();
-		noteWords =	(IterableMap<String, Integer>) wordCountMap(note);
-		HashMap<String, Integer> magWords = wordCountMap(magazine);
-		MapIterator<String, Integer> iterator = noteWords.mapIterator();
-		
-		while(iterator.hasNext()) {
-			if (magWords.containsKey(iterator.next())) {
-				Integer noteWordsCount = noteWords.get(iterator.next());
-				Integer magwordsCount = magWords.get(iterator.next());
-				if (noteWordsCount.equals(magwordsCount)) {
-					willWork = true;
-				} 
-				
-			}
-		}
-		if (willWork) 
-			System.out.println("Yes");
-		else
-			System.out.println("No");
-	}
+		// Store and count the words in the magazine in a hashmap
+				HashMap<String, Integer> unqWordsAndCount = new HashMap<String, Integer>();
+				for (String magWord : magazine) {
+					if (unqWordsAndCount.containsKey(magWord)) {
+						unqWordsAndCount.put(magWord, unqWordsAndCount.get(magWord) + 1);
+					} else {
+						unqWordsAndCount.put(magWord, 1);
+					}
+				}
 
-	private static HashMap<String, Integer> wordCountMap(List<String> words) {
-		HashMap<String, Integer> wordMap = new HashMap<>();
-		HashSet<String> unqWords = new HashSet<>();
-		unqWords.addAll(words);
-		for (String s : unqWords) {
-			wordMap.put(s, Collections.frequency(words, s));
-		}
-
-		return wordMap;
+				// Iterate through the hash map and compare the note words for presence and
+				// count in magazine
+				for (String rnword : note) {
+					//if it has the work but there are not enough of that word in the magazine
+					if (unqWordsAndCount.containsKey(rnword)) {
+						unqWordsAndCount.put(rnword, unqWordsAndCount.get(rnword) - 1);
+						if (unqWordsAndCount.get(rnword) < 0) {
+							System.out.println("No");
+							return;
+						}
+					// if the word is not found in the magazine
+					}else {
+						System.out.println("No");
+						return;
+					}
+				}
+				// All the words in the note are in the magazine with at least as many as needed for the note
+				System.out.println("Yes");
 	}
 
 }
