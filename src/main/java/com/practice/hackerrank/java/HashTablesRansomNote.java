@@ -1,23 +1,15 @@
 package com.practice.hackerrank.java;
 
-import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.regex.*;
-import java.util.stream.*;
-import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.MapIterator;
-import org.apache.commons.collections4.map.HashedMap;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Stream;
 /*
+ * @author zoepiptall
  * 
  */
 public class HashTablesRansomNote {
